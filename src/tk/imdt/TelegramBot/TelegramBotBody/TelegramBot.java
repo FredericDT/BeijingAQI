@@ -1,6 +1,7 @@
 package tk.imdt.TelegramBot.TelegramBotBody;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -208,12 +209,16 @@ public class TelegramBot {
 	
 	public void sendPhoto(String url, String chatId) {
 		try {
-			String s = new JSONObject().put("chat_id", chatId).put("photo", url).toString();
+			//String s = new JSONObject().put("chat_id", chatId).put("photo", url).toString();
+			Logger.log(URLEncoder.encode(url, "UTF-8"));
 			//Logger.log(s);
-			postCallMethod("sendPhoto", s
-					//"chat_id=" + chatId + "&photo=" + java.net.URLEncoder.encode(url,"UTF-8")
+			postCallMethod("sendPhoto", 
+					"chat_id=" + chatId + "&photo=" + URLEncoder.encode(url,"UTF-8")
+					//s
 					);
 		} catch (IOException e) {
+			Logger.log(this.reply.toString());
+			e.printStackTrace();
 		}
 	}
 	public void sendMessage(String msg, String chatId) {
